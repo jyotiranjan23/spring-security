@@ -1,5 +1,6 @@
 package com.codeSnippet.service;
 
+import com.codeSnippet.ennum.Role;
 import com.codeSnippet.entity.Users;
 import com.codeSnippet.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -16,10 +17,19 @@ public class AdminUserInitializer {
                 Users admin = new Users();
                 admin.setUserName("admin");
                 admin.setPassword(passwordEncoder.encode("admin1234"));
-                admin.setRole("ROLE_ADMIN");
+                admin.setRole(Role.ADMIN);
 
                 userRepository.save(admin);
                 System.out.println("Default admin user Created");
+            }
+            if (userRepository.findByUserName("user").isEmpty()) {
+                Users user = new Users();
+                user.setUserName("user");
+                user.setPassword(passwordEncoder.encode("user1234"));
+                user.setRole(Role.USER);
+
+                userRepository.save(user);
+                System.out.println("Default user Created");
             }
         };
     }

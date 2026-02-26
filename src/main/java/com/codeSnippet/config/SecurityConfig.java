@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/h2-console/**", "/authenticate").permitAll()
+                        auth.requestMatchers("/h2-console/**", "/authenticate", "/register").permitAll()
 //                                .requestMatchers(HttpMethod.GET,"/health").hasAuthority(Permissions.READ.name())
 //                                .requestMatchers(HttpMethod.POST,"/health").hasAuthority(Permissions.WRITE.name())
                                 .anyRequest().authenticated())

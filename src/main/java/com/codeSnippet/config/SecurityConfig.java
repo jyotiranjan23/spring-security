@@ -1,14 +1,12 @@
 package com.codeSnippet.config;
 
-import com.codeSnippet.ennum.Permissions;
-import com.codeSnippet.ennum.Role;
 import com.codeSnippet.filters.JWTAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -19,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private JWTAuthFilter jwtAuthFilter;
@@ -32,8 +31,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/h2-console/**", "/authenticate").permitAll()
-                                .requestMatchers(HttpMethod.GET,"/health").hasAuthority(Permissions.READ.name())
-                                .requestMatchers(HttpMethod.POST,"/health").hasAuthority(Permissions.WRITE.name())
+//                                .requestMatchers(HttpMethod.GET,"/health").hasAuthority(Permissions.READ.name())
+//                                .requestMatchers(HttpMethod.POST,"/health").hasAuthority(Permissions.WRITE.name())
                                 .anyRequest().authenticated())
 //                .httpBasic(withDefaults())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
